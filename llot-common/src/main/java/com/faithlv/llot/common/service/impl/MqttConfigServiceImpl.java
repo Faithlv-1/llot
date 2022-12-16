@@ -1,11 +1,11 @@
-package com.faithlv.llot.mqtt.service.impl;
+package com.faithlv.llot.common.service.impl;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.faithlv.llot.mqtt.mapper.MqttConfigMapper;
-import com.faithlv.llot.mqtt.model.po.MqttConfig;
-import com.faithlv.llot.mqtt.service.MqttConfigService;
+import com.faithlv.llot.common.mapper.MqttConfigMapper;
+import com.faithlv.llot.common.model.po.MqttConfig;
+import com.faithlv.llot.common.service.MqttConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

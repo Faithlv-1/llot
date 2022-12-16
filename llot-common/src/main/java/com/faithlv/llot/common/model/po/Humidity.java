@@ -1,4 +1,4 @@
-package com.faithlv.llot.mqtt.model.po;
+package com.faithlv.llot.common.model.po;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -11,18 +11,18 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Temp {
+public class Humidity {
 
     /**
-     * 温度Id
+     * 湿度id
      */
     @TableId(type = IdType.AUTO)
-    private Integer tempId;
+    private Integer humidityId;
 
     /**
-     * 温度数据
+     * 湿度数据
      */
-    private Double tempData;
+    private Double humidityData;
 
     /**
      * 房子id

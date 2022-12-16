@@ -1,6 +1,6 @@
 package com.faithlv.llot.mqtt.mapper;
 
-import com.faithlv.llot.mqtt.mapper.Co2Mapper;
+import com.faithlv.llot.common.mapper.Co2Mapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

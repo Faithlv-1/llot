@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.faithlv.llot.mqtt.mapper.MqttTopicMapper">
+<mapper namespace="com.faithlv.llot.mqtt.mapper.TopicWithHouseDeviceMapper">
 
     <select id="selectWithHouseDevice" resultType="com.faithlv.llot.mqtt.model.other.TopicWithHouseDevice">
         SELECT topic_name,house_name,device_name,type_name

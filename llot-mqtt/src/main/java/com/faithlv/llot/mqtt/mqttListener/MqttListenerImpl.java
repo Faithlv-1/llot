@@ -1,13 +1,13 @@
 package com.faithlv.llot.mqtt.mqttListener;
 
+import com.faithlv.llot.common.model.po.MqttConfig;
+import com.faithlv.llot.common.service.MqttConfigService;
+import com.faithlv.llot.mqtt.Service.TopicWithHouseDeviceService;
 import com.faithlv.llot.mqtt.constant.MqttConstant;
 import com.faithlv.llot.mqtt.model.other.TopicWithHouseDevice;
-import com.faithlv.llot.mqtt.model.po.MqttConfig;
 import com.faithlv.llot.mqtt.mqttCallback.Co2Callback;
 import com.faithlv.llot.mqtt.mqttCallback.HumidityCallback;
 import com.faithlv.llot.mqtt.mqttCallback.TempCallback;
-import com.faithlv.llot.mqtt.service.MqttConfigService;
-import com.faithlv.llot.mqtt.service.MqttTopicService;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -31,12 +31,12 @@ public class MqttListenerImpl implements CommandLineRunner {
     MqttConfigInit mqttConfigInit;
 
     @Autowired
-    MqttTopicService mqttTopicService;
+    TopicWithHouseDeviceService topicWithHouseDeviceService;
 
 
     @Override
     public void run(String... args) throws Exception {
-        List<TopicWithHouseDevice> topicWithHouseDeviceList = mqttTopicService.getWithHouseDevice();
+        List<TopicWithHouseDevice> topicWithHouseDeviceList = topicWithHouseDeviceService.getWithHouseDevice();
         for (TopicWithHouseDevice topicWithHouseDevice : topicWithHouseDeviceList){
             String topicName = topicWithHouseDevice.getTopicName();
             String houseName = topicWithHouseDevice.getHouseName();

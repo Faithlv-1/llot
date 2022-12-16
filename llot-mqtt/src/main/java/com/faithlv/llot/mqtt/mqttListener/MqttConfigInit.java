@@ -1,7 +1,7 @@
 package com.faithlv.llot.mqtt.mqttListener;
 
-import com.faithlv.llot.mqtt.model.po.MqttConfig;
-import com.faithlv.llot.mqtt.service.MqttConfigService;
+import com.faithlv.llot.common.model.po.MqttConfig;
+import com.faithlv.llot.common.service.MqttConfigService;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

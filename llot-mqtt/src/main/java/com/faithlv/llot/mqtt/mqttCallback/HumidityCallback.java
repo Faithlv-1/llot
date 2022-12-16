@@ -1,7 +1,7 @@
 package com.faithlv.llot.mqtt.mqttCallback;
 
 import cn.hutool.json.JSONUtil;
-import com.faithlv.llot.mqtt.model.po.Humidity;
+import com.faithlv.llot.common.model.po.Humidity;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
@@ -26,15 +26,16 @@ public class HumidityCallback implements MqttCallback {
     /**
      * 消息到达
      *
-     * @param s           年代
+     * @param topic       年代
      * @param mqttMessage mqtt消息
      * @throws Exception 异常
      */
     @Override
-    public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
+    public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
         log.info("HumidityMqtt连接成功");
-        log.info("json is {}",s);
-        Humidity humidity = JSONUtil.toBean(s, Humidity.class);
+        log.info("json is {}",topic);
+        //todo 这里会出现转换异常
+        Humidity humidity = JSONUtil.toBean(new String(mqttMessage.getPayload()), Humidity.class);
         log.info(humidity.toString());
 
     }

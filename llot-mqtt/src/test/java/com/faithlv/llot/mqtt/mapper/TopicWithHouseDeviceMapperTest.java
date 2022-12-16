@@ -1,18 +1,18 @@
 package com.faithlv.llot.mqtt.mapper;
 
-import com.faithlv.llot.common.mapper.TempMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class TempMapperTest {
+public class TopicWithHouseDeviceMapperTest {
 
     @Autowired
-    TempMapper tempMapper;
-
+    TopicWithHouseDeviceMapper topicWithHouseDeviceMapper;
     @Test
+//    @Transactional
     void test(){
-        tempMapper.selectList(null);
+//        mqttTopicMapper.selectList(null);
+        topicWithHouseDeviceMapper.selectWithHouseDevice();
     }
 }

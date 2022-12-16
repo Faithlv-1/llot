@@ -1,7 +1,7 @@
 package com.faithlv.llot.mqtt.mqttCallback;
 
 import cn.hutool.json.JSONUtil;
-import com.faithlv.llot.mqtt.model.po.Temp;
+import com.faithlv.llot.common.model.po.Temp;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;

@@ -1,5 +1,4 @@
-package com.faithlv.llot.mqtt.model.po;
-
+package com.faithlv.llot.common.model.po;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -9,32 +8,36 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Co2 {
+@NoArgsConstructor
+public class MqttConfig {
 
     /**
-     * 二氧化碳id
+     * 配置id
      */
     @TableId(type = IdType.AUTO)
-    private Integer co2Id;
+    private Integer confId;
 
     /**
-     * 二氧化碳数据
+     * 系统名称
      */
-    private Double co2Data;
+    private String sysName;
 
     /**
-     * 房子id
+     * mqtt addr
      */
-    private Integer houseId;
+    private String mqttIp;
 
     /**
-     * 设备id
+     * mqtt端口
      */
-    private Integer deviceId;
+    private String mqttPort;
+
+    /**
+     * mqtt url
+     */
+    private String mqttUrl;
 
     /**
      * 创造时间
@@ -47,4 +50,6 @@ public class Co2 {
      */
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private String modifyTime;
+
+
 }
