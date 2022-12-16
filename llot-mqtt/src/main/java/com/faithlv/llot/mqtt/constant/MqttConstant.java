@@ -18,9 +18,9 @@ public interface MqttConstant {
 
     String MQTT_CALLBCAKCLASS_TEMP = "tempCallback";
 
-    String MQTT_CLIENT_ID_CO2 = "FirstMachine_Co2";
+    String MQTT_CLIENT_ID_CO2 = "llot-firstMachine-co2";
 
-    String MQTT_CLIENT_ID_HUMIDITY = "FirstMachine_Humidity";
+    String MQTT_CLIENT_ID_HUMIDITY = "llot-firstMachine_humidity";
 
-    String MQTT_CLIENT_ID_TEMP = "FirstMachine_Temp";
+    String MQTT_CLIENT_ID_TEMP = "llot-firstMachine-temp";
 }
