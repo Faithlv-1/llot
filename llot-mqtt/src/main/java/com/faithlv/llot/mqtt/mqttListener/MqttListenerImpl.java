@@ -90,7 +90,7 @@ public class MqttListenerImpl implements CommandLineRunner {
 
     }
 
-    private static MqttClient creatMqttClient(String clientId,MqttCallback mqttCallback,MqttConfigInit mqttConfigInit) throws MqttException {
+    public static MqttClient creatMqttClient(String clientId,MqttCallback mqttCallback,MqttConfigInit mqttConfigInit) throws MqttException {
         MqttConfig myMqttConfig = mqttConfigInit.getMyMqttConfig();
         Map<String, String> login = mqttConfigInit.getLogin();
 
@@ -117,7 +117,7 @@ public class MqttListenerImpl implements CommandLineRunner {
 
     }
 
-    private static void creatMqttListener(MqttClient client,String[] subTopicList) throws MqttException {
+    public static void creatMqttListener(MqttClient client,String[] subTopicList) throws MqttException {
         client.subscribe(subTopicList);
     }
 }
