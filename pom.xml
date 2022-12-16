@@ -22,7 +22,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>llot-Mqtt</module>
+        <module>llot-mqtt</module>
         <module>llot-main</module>
         <module>llot-common</module>
     </modules>

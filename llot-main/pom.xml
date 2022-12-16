@@ -28,7 +28,7 @@
 
         <dependency>
             <groupId>com.faithlv</groupId>
-            <artifactId>llot-Mqtt</artifactId>
+            <artifactId>llot-mqtt</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
