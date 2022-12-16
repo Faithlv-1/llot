@@ -8,7 +8,7 @@ import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("tempCallback")
 @Slf4j
 public class TempCallback implements MqttCallback {
     /**

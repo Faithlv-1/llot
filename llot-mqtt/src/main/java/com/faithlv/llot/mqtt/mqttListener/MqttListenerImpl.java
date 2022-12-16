@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,9 +34,23 @@ public class MqttListenerImpl implements CommandLineRunner {
     @Autowired
     TopicWithHouseDeviceService topicWithHouseDeviceService;
 
+    //todo 采用常量
+    @Autowired
+    Co2Callback co2Callback;
+
+    @Autowired
+    HumidityCallback humidityCallback;
+
+    @Autowired
+    TempCallback tempCallback;
 
     @Override
     public void run(String... args) throws Exception {
+        //todo 以后考虑可以添加参数的功能，不写死在代码
+        ArrayList<String> co2TopicList = new ArrayList<>();
+        ArrayList<String> humidityTopicList = new ArrayList<>();
+        ArrayList<String> tempTopicList = new ArrayList<>();
+
         List<TopicWithHouseDevice> topicWithHouseDeviceList = topicWithHouseDeviceService.getWithHouseDevice();
         for (TopicWithHouseDevice topicWithHouseDevice : topicWithHouseDeviceList){
             String topicName = topicWithHouseDevice.getTopicName();
@@ -43,27 +58,39 @@ public class MqttListenerImpl implements CommandLineRunner {
             String deviceName = topicWithHouseDevice.getDeviceName();
             String typeName = topicWithHouseDevice.getTypeName();
 
-            String clientId = houseName+"-"+deviceName+"-"+typeName;
             //todo callback生成方式待考虑
             MqttCallback mqttCallback = null;
             if(typeName.equals(MqttConstant.MQTT_TYPE_NAME_CO2)){
-                mqttCallback = new Co2Callback();
+                co2TopicList.add(topicName);
             }
             else if(typeName.equals(MqttConstant.MQTT_TYPE_NAME_HUMIDITY)){
-                mqttCallback = new HumidityCallback();
+                humidityTopicList.add(topicName);
             }
             else if(typeName.equals(MqttConstant.MQTT_TYPE_NAME_TEMP)){
-                mqttCallback = new TempCallback();
+                tempTopicList.add(topicName);
             }
-            log.info("start creat MqttListener:{}",typeName);
-            //创建Listener
-            creatMqttListener(clientId,topicName,mqttCallback,mqttConfigInit);
-            log.info("ok creat MqttListener:{}",typeName);
+            else {
+                log.info("未知type类型:【{}】，不创建Listener",topicName);
+                return;
+            }
+
         }
+
+        //创建client
+        MqttClient co2Client = creatMqttClient(MqttConstant.MQTT_CLIENT_ID_CO2, co2Callback, mqttConfigInit);
+        MqttClient humidityClient = creatMqttClient(MqttConstant.MQTT_CLIENT_ID_HUMIDITY, humidityCallback, mqttConfigInit);
+        MqttClient tempClient = creatMqttClient(MqttConstant.MQTT_CLIENT_ID_TEMP, tempCallback, mqttConfigInit);
+
+        log.info("start creat MqttListener}");
+        //创建Listener
+        creatMqttListener(co2Client,co2TopicList.toArray(new String[0]));
+        creatMqttListener(humidityClient,humidityTopicList.toArray(new String[0]));
+        creatMqttListener(tempClient,tempTopicList.toArray(new String[0]));
+        log.info("ok creat MqttListener");
 
     }
 
-    private static void creatMqttListener(String clientId,String subTopic,MqttCallback mqttCallback,MqttConfigInit mqttConfigInit){
+    private static MqttClient creatMqttClient(String clientId,MqttCallback mqttCallback,MqttConfigInit mqttConfigInit) throws MqttException {
         MqttConfig myMqttConfig = mqttConfigInit.getMyMqttConfig();
         Map<String, String> login = mqttConfigInit.getLogin();
 
@@ -73,29 +100,24 @@ public class MqttListenerImpl implements CommandLineRunner {
         String broker = myMqttConfig.getMqttUrl();
         MemoryPersistence persistence = new MemoryPersistence();
 
-        try {
-            MqttClient client = new MqttClient(broker,clientId,persistence);
+        MqttClient client = new MqttClient(broker,clientId,persistence);
 
-            // MQTT 连接选项
-            MqttConnectOptions connOpts = new MqttConnectOptions();
-            connOpts.setUserName(username);
-            connOpts.setPassword(password.toCharArray());
-            // 保留会话
-            connOpts.setCleanSession(true);
-            // 设置回调
-            client.setCallback(mqttCallback);
+        // MQTT 连接选项
+        MqttConnectOptions connOpts = new MqttConnectOptions();
+        connOpts.setUserName(username);
+        connOpts.setPassword(password.toCharArray());
+        connOpts.setAutomaticReconnect(true);
+        // 保留会话
+        connOpts.setCleanSession(true);
+        // 设置回调
+        client.setCallback(mqttCallback);
+        // 建立连接
+        client.connect(connOpts);
+        return client;
 
-            // 建立连接
-            client.connect(connOpts);
+    }
 
-            client.subscribe(subTopic);
-        } catch (MqttException me) {
-            System.out.println("reason " + me.getReasonCode());
-            System.out.println("msg " + me.getMessage());
-            System.out.println("loc " + me.getLocalizedMessage());
-            System.out.println("cause " + me.getCause());
-            System.out.println("excep " + me);
-            me.printStackTrace();
-        }
+    private static void creatMqttListener(MqttClient client,String[] subTopicList) throws MqttException {
+        client.subscribe(subTopicList);
     }
 }

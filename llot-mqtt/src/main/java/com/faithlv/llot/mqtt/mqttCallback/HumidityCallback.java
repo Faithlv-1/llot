@@ -2,15 +2,20 @@ package com.faithlv.llot.mqtt.mqttCallback;
 
 import cn.hutool.json.JSONUtil;
 import com.faithlv.llot.common.model.po.Humidity;
+import com.faithlv.llot.common.service.HumidityService;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("humidityCallback")
 @Slf4j
 public class HumidityCallback implements MqttCallback {
+
+    @Autowired
+    HumidityService humidityService;
 
     /**
      * 连接丢失
